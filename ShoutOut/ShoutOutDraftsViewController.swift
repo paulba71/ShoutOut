@@ -3,12 +3,16 @@
 //  ShoutOut
 
 import UIKit
+import CoreData
 
 class ShoutOutDraftsViewController: UIViewController,
 									UITableViewDataSource,
-									UITableViewDelegate {
-
+									UITableViewDelegate,
+                                    ManagedObjectContextDependentType {
+    
 	@IBOutlet weak var tableView: UITableView!
+    
+    var managedObjectContext: NSManagedObjectContext!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -44,6 +48,16 @@ class ShoutOutDraftsViewController: UIViewController,
 	
 	// MARK: - Navigation
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		
+        switch segue.identifier! {
+        case "shoutOutDetails":
+            let destinationVC = segue.destination as! ShoutOutDetailsViewController
+            destinationVC.managedObjectContext = self.managedObjectContext
+        case "addShoutOut":
+            let navigationController = segue.destination as! UINavigationController
+            let destinationVC = navigationController.viewControllers[0] as! ShoutOutEditorViewController
+            destinationVC.managedObjectContext = self.managedObjectContext
+        default:
+            break
+        }
 	}
 }

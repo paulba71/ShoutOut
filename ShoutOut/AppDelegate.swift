@@ -12,8 +12,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 		// Override point for customization after application launch.
+        let mainContext = createMainContext()
+        let firstViewController = getFirstViewController()
+        firstViewController.managedObjectContext = mainContext
+        
 		return true
 	}
+    
+    func getFirstViewController () -> ShoutOutDraftsViewController {
+        // Get the window's root view controller (which is a navagation controller)
+        let navigationController = window?.rootViewController as! UINavigationController
+        
+        // Get the navigation controller's first view controller
+        // Cast it to a ShoutOutDraftsViewController and return it
+        let firstVC = navigationController.viewControllers[0]
+        
+        return firstVC as! ShoutOutDraftsViewController
+    }
 
 	func applicationWillResignActive(_ application: UIApplication) {
 		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
